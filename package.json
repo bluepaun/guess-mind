@@ -1,0 +1,28 @@
+{
+    "name": "guess-mind",
+    "version": "1.0.0",
+    "description": "real time drawing game with socketio",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev:server": "nodemon --exec babel-node src/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bluepaun/guess-mind.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bluepaun/guess-mind/issues"
+    },
+    "homepage": "https://github.com/bluepaun/guess-mind#readme",
+    "dependencies": {
+        "@babel/core": "^7.11.4",
+        "@babel/node": "^7.10.5",
+        "@babel/preset-env": "^7.11.0",
+        "express": "^4.17.1",
+        "nodemon": "^2.0.4",
+        "socket.io": "^2.3.0"
+    }
+}
