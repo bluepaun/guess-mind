@@ -3,7 +3,7 @@ import path from "path";
 import socketIO from "socket.io";
 import logger from "morgan";
 
-const PORT = 4000;
+const PORT = 80;
 const app = express();
 
 const handleListening = () =>
@@ -26,7 +26,14 @@ const io = socketIO.listen(server);
 let sockets = [];
 
 io.on("connection", (socket) => {
-    sockets.push(socket.id);
+    socket.on("newMessage", ({ message }) => {
+        console.log(message);
+        socket.broadcast.emit("messageNotif", {
+            message,
+            nickname: socket.nickname || "Anonymos",
+        });
+    });
+    socket.on("setNickname", ({ nickname }) => {
+        socket.nickname = nickname;
+    });
 });
-
-setInterval(() => console.log(sockets), 2000);
