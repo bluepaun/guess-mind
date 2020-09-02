@@ -7,4 +7,6 @@ guess-mind
 -   [x] Server
 -   [x] Pug
 -   [x] Static
--   [ ] SocketIO
+-   [x] gulp
+-   [x] SocketIO
+-   [ ] scss
