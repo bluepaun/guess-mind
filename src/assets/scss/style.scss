@@ -1,5 +1,60 @@
-@import "variables/__varaible.scss";
+@import "config/reset.scss";
+@import "config/_variable";
+@import "body";
+
+* {
+    box-sizing: border-box;
+}
+
+button:focus {
+    outline: none;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
 
 body {
-    background-color: $red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    .loginBox,
+    .gameContainer {
+        display: none;
+    }
+    &.loggedOut {
+        .loginBox {
+            display: block;
+        }
+    }
+    &.loggedIn {
+        .gameContainer {
+            display: block;
+        }
+    }
+}
+
+@keyframes showAni {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+.loginBox {
+    padding: 2vh;
+    border-radius: 8px;
+    background-color: $blueGrey100;
+    box-shadow: $boxShadow2;
+    input {
+        height: 4vh;
+        border: none;
+    }
+    animation: showAni 1s ease;
 }

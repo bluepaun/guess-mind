@@ -5,7 +5,14 @@ html(lang="kr")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Guess Mind
         link(rel="stylesheet", href="/static/style.css")
+        script(defer).
+             window.events=!{events};
         script(defer src="/socket.io/socket.io.js")
         script(defer src="/static/main.js")
     body
-        h1 Hello world!
+        .loginBox
+            form#jsLogin
+                input(placeholder="Type your nickname", type="text", name="nickname")
+        .gameContainer#jsGame
+            h1 You are logged in
+
