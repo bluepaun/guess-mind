@@ -58,3 +58,41 @@ body {
     }
     animation: showAni 1s ease;
 }
+
+@keyframes notiAni {
+    0% {
+        opacity: 0;
+        transform: scale(0.1) translateY(40px);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1) translateY(0px);
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.notifications {
+    position: fixed;
+    left: 2%;
+    bottom: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    div {
+        width: 170px;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        align-self: center;
+        color: white;
+        box-shadow: $boxShadow2;
+        animation: notiAni 2s ease-in-out forwards;
+    }
+}
