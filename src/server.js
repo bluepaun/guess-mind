@@ -18,7 +18,6 @@ app.use(logger("dev"));
 app.use("/static", express.static(path.join(__dirname, "static")));
 
 app.get("/", (req, res) => {
-    console.log("server", JSON.stringify(events));
     res.render("home", {
         events: JSON.stringify(events),
     });

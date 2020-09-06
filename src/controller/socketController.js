@@ -12,4 +12,13 @@ export const socketController = (socket) => {
     socket.on(events.sendMsg, ({ message }) => {
         broadcast(events.newMsg, { nickname: socket.nickname, message });
     });
+    socket.on(events.sendBeginPath, ({ x, y }) => {
+        broadcast(events.receiveBeginPath, { x, y });
+    });
+    socket.on(events.sendStrokePath, ({ x, y, color }) => {
+        broadcast(events.receiveStrokePath, { x, y, color });
+    });
+    socket.on(events.sendFill, ({ color }) => {
+        broadcast(events.receiveFill, { color });
+    });
 };

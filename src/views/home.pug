@@ -8,7 +8,7 @@ html(lang="kr")
         script(defer).
              window.events=!{events};
         script(defer src="/socket.io/socket.io.js")
-        script(defer src="/static/main.js")
+
     body
         .loginBox
             form#jsLogin
@@ -34,4 +34,6 @@ html(lang="kr")
                 form.chat__form#jsSendMessage
                     input(placeholder="write a message", type="text")
             .notifications#jsNotification
+
+        script(defer src="/static/main.js")
 

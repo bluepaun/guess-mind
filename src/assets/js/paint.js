@@ -1,3 +1,5 @@
+import { socket, events } from "./sockets";
+
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext("2d");
 const btns = document.querySelector(".canvasContainer");
@@ -6,10 +8,34 @@ const paintingSize = document.querySelector("#jsBrushSize");
 let isPainting = false;
 let isFilling = false;
 
+const sendBeginPath = (x, y) => {
+    socket.emit(events.sendBeginPath, { x, y });
+};
+
+const sendStrokePath = (x, y) => {
+    socket.emit(events.sendStrokePath, { x, y, color: ctx.strokeStyle });
+};
+
+export const beginPath = (x, y) => {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+};
+
+export const strokePath = (x, y, color = null) => {
+    const currentColor = ctx.strokeStyle;
+    if (color !== null) {
+        ctx.strokeStyle = color;
+    }
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.strokeStyle = currentColor;
+};
+
 const clearCanvas = () => {
     const previousStyle = ctx.fillStyle;
     ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    fillCanvas();
+    sendFill();
     ctx.fillStyle = previousStyle;
 };
 
@@ -18,13 +44,12 @@ const onMouseMove = (event) => {
         return;
     }
     const { offsetX: x, offsetY: y } = event;
-    console.log(x, y);
     if (isPainting == false) {
-        ctx.beginPath();
-        ctx.moveTo(x, y);
+        beginPath(x, y);
+        sendBeginPath(x, y);
     } else {
-        ctx.lineTo(x, y);
-        ctx.stroke();
+        strokePath(x, y);
+        sendStrokePath(x, y);
     }
 };
 
@@ -40,12 +65,25 @@ const onChangePaintingSize = (event) => {
     ctx.lineWidth = event.target.value;
 };
 
+export const fillCanvas = (color = null) => {
+    const currentColor = ctx.fillStyle;
+    if (color !== null) {
+        ctx.fillStyle = color;
+    }
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = currentColor;
+};
+
+const sendFill = () => {
+    if (socket) socket.emit(events.sendFill, { color: ctx.fillStyle });
+};
+
 const onCanvasClick = (event) => {
     if (isFilling === false) {
         return;
     }
-
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    fillCanvas();
+    sendFill();
 };
 
 const handleControl = (control, btn) => {
@@ -86,23 +124,17 @@ const onBtnClick = (event) => {
     }
 };
 
-const log = (text) => {
-    const span = document.createElement("span");
-    span.innerText = text;
-    btns.appendChild(span);
-};
-
 const onTouchStart = (event) => {
     event.preventDefault();
     if (isFilling) {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         return;
     }
-    ctx.beginPath();
     const rect = event.target.getBoundingClientRect();
     const x = event.targetTouches[0].pageX - rect.left;
     const y = event.targetTouches[0].pageY - rect.top;
-    ctx.moveTo(x, y);
+    beginPath(x, y);
+    sendBeginPath(x, y);
 };
 
 const onTouchMove = (event) => {
@@ -110,8 +142,8 @@ const onTouchMove = (event) => {
     const rect = event.target.getBoundingClientRect();
     const x = event.targetTouches[0].pageX - rect.left;
     const y = event.targetTouches[0].pageY - rect.top;
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    strokePath(x, y);
+    sendStrokePath(x, y);
 };
 
 const init = () => {
@@ -127,8 +159,8 @@ const init = () => {
     canvas.addEventListener("touchstart", onTouchStart);
     canvas.addEventListener("touchend", stopPainting);
     canvas.addEventListener("touchcancel", stopPainting);
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+    canvas.width = 300;
+    canvas.height = 300;
     setColor("black");
     ctx.lineWidth = 2.5;
     clearCanvas();
