@@ -4,6 +4,7 @@ const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext("2d");
 const btns = document.querySelector(".canvasContainer");
 const paintingSize = document.querySelector("#jsBrushSize");
+const controlContainer = document.querySelector("#jsControlContainer");
 
 let isPainting = false;
 let isFilling = false;
@@ -71,7 +72,7 @@ export const fillCanvas = (color = null) => {
         ctx.fillStyle = color;
     }
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = currentColor;
+    ctx.fillStyle = currentColor;
 };
 
 const sendFill = () => {
@@ -146,22 +147,51 @@ const onTouchMove = (event) => {
     sendStrokePath(x, y);
 };
 
-const init = () => {
+export const enableCanvas = () => {
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
     canvas.addEventListener("click", onCanvasClick);
-    canvas.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-    });
     canvas.addEventListener("touchmove", onTouchMove);
     canvas.addEventListener("touchstart", onTouchStart);
     canvas.addEventListener("touchend", stopPainting);
     canvas.addEventListener("touchcancel", stopPainting);
+};
+
+export const disableCanvas = () => {
+    canvas.removeEventListener("mousemove", onMouseMove);
+    canvas.removeEventListener("mousedown", startPainting);
+    canvas.removeEventListener("mouseup", stopPainting);
+    canvas.removeEventListener("mouseleave", stopPainting);
+    canvas.removeEventListener("click", onCanvasClick);
+    canvas.removeEventListener("touchmove", onTouchMove);
+    canvas.removeEventListener("touchstart", onTouchStart);
+    canvas.removeEventListener("touchend", stopPainting);
+    canvas.removeEventListener("touchcancel", stopPainting);
+};
+
+export const hideCanvasControls = () => {
+    controlContainer.style.display = "none";
+};
+
+export const showCanvasControls = () => {
+    controlContainer.style.display = "block";
+};
+
+export const resetCanvas = () => {
+    clearCanvas();
+};
+
+const init = () => {
+    hideCanvasControls();
+    canvas.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+    });
+
     canvas.width = 300;
     canvas.height = 300;
-    setColor("black");
+    setColor("#000000");
     ctx.lineWidth = 2.5;
     clearCanvas();
 

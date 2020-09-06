@@ -1,6 +1,14 @@
 import { handleNewUser, handleDisconnectedUser } from "./notifications";
 import { handleNewMsg } from "./chat";
 import { beginPath, strokePath, fillCanvas } from "./paint";
+import {
+    handlePlayerUpdate,
+    handleGameStarted,
+    handlePainterNotif,
+    handleGameEnded,
+    handleGameStarting,
+    handleTimer,
+} from "./player";
 
 export let socket = null;
 export const events = window.events;
@@ -19,4 +27,10 @@ export const initSockets = () => {
     socket.on(events.receiveFill, ({ color }) => {
         fillCanvas(color);
     });
+    socket.on(events.playerUpdate, handlePlayerUpdate);
+    socket.on(events.gameStarted, handleGameStarted);
+    socket.on(events.painterNotif, handlePainterNotif);
+    socket.on(events.gameEnded, handleGameEnded);
+    socket.on(events.starting, handleGameStarting);
+    socket.on(events.timer, handleTimer);
 };

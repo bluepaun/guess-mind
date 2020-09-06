@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import socketIO from "socket.io";
 import logger from "morgan";
-import { socketController } from "./controller/socketController";
+import { socketController, ioController } from "./controller/socketController";
 import events from "./event";
 
 const PORT = 80;
@@ -27,3 +27,4 @@ const server = app.listen(PORT, handleListening);
 
 const io = socketIO.listen(server);
 io.on("connection", (socket) => socketController(socket));
+ioController(io);

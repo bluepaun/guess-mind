@@ -113,6 +113,15 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    .playerBoard {
+        li {
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            box-shadow: $boxShadow2;
+            margin-bottom: 10px;
+        }
+    }
     .chat__messages {
         background-color: white;
         height: 50vh;

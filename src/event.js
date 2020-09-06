@@ -11,6 +11,12 @@ const events = {
     receiveStrokePath: "receiveStrokePath",
     sendFill: "sendFill",
     receiveFill: "receiveFill",
+    playerUpdate: "playerUpdate",
+    gameStarted: "gameStarted",
+    painterNotif: "painterNotif",
+    gameEnded: "gameEnded",
+    starting: "starting",
+    timer: "timer",
 };
 
 export default events;
