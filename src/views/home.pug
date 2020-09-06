@@ -14,6 +14,24 @@ html(lang="kr")
             form#jsLogin
                 input(placeholder="Type your nickname", type="text", name="nickname")
         .gameContainer#jsGame
-            h1 You are logged in
+            .canvasContainer
+                canvas#jsCanvas
+                label Brush Size
+                input(type="range",min="0.1", max="5.0",value="2.5," step="0.1")#jsBrushSize
+                .controls
+                    button.controlBtn(data-key="control", data-value="fill") FILL
+                    button.controlBtn(data-key="control", data-value="clear") CLEAR
+                .colors
+                    button.colorBtn(data-key="color", data-value="black", style="background-color:black")
+                    button.colorBtn(data-key="color", data-value="white", style="background-color:white")
+                    button.colorBtn(data-key="color", data-value="red", style="background-color:red")
+                    button.colorBtn(data-key="color", data-value="blue", style="background-color:blue")
+                    button.colorBtn(data-key="color", data-value="yellow", style="background-color:yellow")
+                    button.colorBtn(data-key="color", data-value="green", style="background-color:green")
+
+            .chat
+                ul.chat__messages#jsMessages
+                form.chat__form#jsSendMessage
+                    input(placeholder="write a message", type="text")
             .notifications#jsNotification
 

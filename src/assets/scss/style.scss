@@ -31,7 +31,9 @@ body {
     }
     &.loggedIn {
         .gameContainer {
-            display: block;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
         }
     }
 }
@@ -94,5 +96,94 @@ body {
         color: white;
         box-shadow: $boxShadow2;
         animation: notiAni 2s ease-in-out forwards;
+    }
+}
+
+@keyframes msgShow {
+    from {
+        transform: translateX(-100px);
+    }
+    to {
+        transform: translateX(0px);
+    }
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .chat__messages {
+        background-color: white;
+        height: 50vh;
+        width: 25vw;
+        box-shadow: $boxShadow2;
+        border-radius: 5px;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        li {
+            animation: msgShow 0.5s ease-in-out forwards;
+            .author {
+                font-weight: 600;
+            }
+            .self {
+                color: $lightGreen;
+            }
+            .other {
+                color: black;
+            }
+        }
+    }
+    .chat__form {
+        z-index: 10;
+        input {
+            background-color: $blueGrey50;
+            border: none;
+            width: 30vw;
+            border-radius: 15px;
+            padding: 10px 20px;
+            box-shadow: $boxShadow3;
+            transition: transform 0.3s ease-in-out;
+            &:focus {
+                outline: none;
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+
+.canvasContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    canvas {
+        width: 300px;
+        height: 300px;
+        background-color: white;
+        margin: 10px 0px;
+    }
+
+    .controls {
+        margin-top: 10px;
+        .controlBtn {
+            margin-left: 5px;
+        }
+    }
+
+    .colors {
+        margin: 10px 0px;
+        .colorBtn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-left: 5px;
+            border: none;
+            box-shadow: $boxShadow3;
+            &:active {
+                box-shadow: $boxShadow2;
+            }
+        }
     }
 }
